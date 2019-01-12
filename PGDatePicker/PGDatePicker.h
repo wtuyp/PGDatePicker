@@ -9,7 +9,12 @@
 #import "NSDate+PGCategory.h"
 #import "UIColor+PGHex.h"
 #import "NSCalendar+PGCurrent.h"
+
+#if __has_include(<PGPickerView/PGPickerView.h>)
 #import <PGPickerView/PGPickerView.h>
+#else
+#import "PGPickerView.h"
+#endif
 
 typedef NS_ENUM(NSInteger, PGDatePickerMode) {
     PGDatePickerModeYear, //年
@@ -48,6 +53,9 @@ typedef NS_ENUM(NSUInteger, PGShowUnitType) {
 @property (nonatomic, weak) id<PGDatePickerDelegate> delegate;
 @property (nonatomic, assign) PGDatePickerMode datePickerMode; // default is PGDatePickerModeYear
 @property(nonatomic, assign) PGDatePickerType datePickerType;
+
+@property (nonatomic, strong) NSDate *selectedDate;
+
 /*
  默认是false
  如果设置为true，则不用按下确定按钮也可以得到选中的日期
@@ -92,7 +100,7 @@ typedef NS_ENUM(NSUInteger, PGShowUnitType) {
 @property (nonatomic, strong) NSDate *minimumDate; // specify min/max date range. default is nil. When min > max, the values are ignored. Ignored in countdown timer mode
 @property (nonatomic, strong) NSDate *maximumDate; // default is nil
 
-@property (nonatomic, copy) void(^selectedDate)(NSDateComponents *dateComponents);
+@property (nonatomic, copy) void(^selectedDateBlock)(NSDateComponents *dateComponents);
 
 @property(nonatomic, assign) BOOL isHiddenWheels; // default is true  true -> hidden
 @property(nonatomic, assign) BOOL isCycleScroll; //default is false

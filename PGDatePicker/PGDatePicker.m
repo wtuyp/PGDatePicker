@@ -195,8 +195,8 @@ static NSString *const reuseIdentifier = @"PGDatePickerView";
     if (self.delegate && [self.delegate respondsToSelector:@selector(datePicker:didSelectDate:)]) {
         [self.delegate datePicker:self didSelectDate:self.selectedComponents];
     }
-    if (self.selectedDate) {
-        self.selectedDate(self.selectedComponents);
+    if (self.selectedDateBlock) {
+        self.selectedDateBlock(self.selectedComponents);
     }
 }
 
@@ -1612,5 +1612,14 @@ static NSString *const reuseIdentifier = @"PGDatePickerView";
     }
     return _sundayString;
 }
+
+- (NSDate *)selectedDate {
+    return [self.calendar dateFromComponents:self.selectedComponents];
+}
+
+- (void)setSelectedDate:(NSDate *)selectedDate {
+    [self setDate:selectedDate];
+}
+
 @end
 
